@@ -1,0 +1,118 @@
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.1"
+tag_format = "$version"
+version_files = [
+    "pyproject.toml:version"
+]
+
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = "tests"
+addopts = "--strict-markers"
+norecursedirs = [
+    ".*",
+    "build",
+    "dist",
+    "CVS",
+    "_darcs",
+    "{arch}",
+    "*.egg",
+    "venv",
+    "env",
+    "virtualenv"
+]
+
+
+[tool.coverage]
+    [tool.coverage.report]
+    show_missing = true
+    exclude_lines = [
+        # Have to re-enable the standard pragma
+        'pragma: no cover',
+
+        # Don't complain about missing debug-only code:
+        'def __repr__',
+        'if self\.debug',
+
+        # Don't complain if tests don't hit defensive assertion code:
+        'raise AssertionError',
+        'raise NotImplementedError',
+
+        # Don't complain if non-runnable code isn't run:
+        'if 0:',
+        'if __name__ == .__main__.:'
+    ]
+    omit = [
+        'env/*',
+        'venv/*',
+        '*/virtualenv/*',
+        '*/virtualenvs/*',
+        '*/tests/*',
+        '__init__.py'
+    ]
+
+
+[tool.poetry]
+name = "fastapi-template"
+version = "0.1.0"
+description = ""
+authors = ["Max <a0025071@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.103.1"
+uvicorn = "^0.23.2"
+pydantic = "^2.7.4"
+pydantic-settings = "^2.3.3"
+sqlalchemy = "^2.0.31"
+python-logstash = "^0.4.8"
+pymysql = "^1.1.1"
+
+[tool.poetry.group.dev.dependencies]
+# task management
+invoke = "^2.2.0"
+# test
+pytest = "^6.0.1"
+pytest-cov = "^2.8.1"
+pytest-mock = "^3.0.0"
+# style
+flake8 = "^3.7.9"
+black = "^21.7b0"
+isort = "^5.0.0"
+# security
+bandit = "^1.6.2"
+safety = "^1.8.7"
+# git
+commitizen = "^2.4.0"
+pre-commit = "^2.2.0"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.masonry.api"
