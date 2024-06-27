@@ -1,3 +1,4 @@
+import logging
 import pprint as pp
 from time import perf_counter
 from typing import Any, Callable
@@ -9,6 +10,8 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
 from app.database.db import engine
+
+logger = logging.getLogger(__name__)
 
 
 class SQLAlchemyMiddleware(BaseHTTPMiddleware):
@@ -34,14 +37,13 @@ class SQLAlchemyMiddleware(BaseHTTPMiddleware):
             "sql": context.statement,
             "params": context.parameters,
         }
-        print("\n")
-        pp.pprint(query)
+        logger.debug(pp.pformat(query))
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         dash_line = "-" * 50
-        print(f"{dash_line} EXECUTE SQL SCRIPT START {dash_line} \n")
+        logger.debug(f"{dash_line} EXECUTE SQL SCRIPT START {dash_line} \n")
         self.register(engine)
         response: Response = await call_next(request)
         self.unregister(engine)
-        print(f"\n {dash_line} EXECUTE SQL SCRIPT END {dash_line}")
+        logger.debug(f"\n {dash_line} EXECUTE SQL SCRIPT END {dash_line}")
         return response

@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: style-check
+        name: style-check
+        stages: [commit]
+        language: system
+        pass_filenames: false
+        entry: inv style.run

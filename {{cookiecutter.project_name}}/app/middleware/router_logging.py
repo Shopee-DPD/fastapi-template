@@ -58,12 +58,6 @@ class RouterLoggingMiddleware(BaseHTTPMiddleware):
     async def parse_request(self, request: Request) -> dict:
         request_log_dict = {}
         rsq_body = None
-        # try:
-        #     rsq_body = None
-        #     if "application/json" in request.headers["Content-Type"]:
-        #         rsq_body = await request.json()
-        # except Exception as e:
-        #     self._logger.debug(f"failed to parse request body: {e}")
         try:
             query_params_str = (
                 f"?{request.query_params}" if request.query_params else None

@@ -57,6 +57,7 @@ LOGGING_CONFIG: dict = {
             "backupCount": 7,
             "encoding": "utf8",
         },
+        {% if cookiecutter.send_logs_to_elk=='y' -%}
         "logstash": {
             "level": LOGGER_SETTINGS.logstash_log_level,
             "class": "logstash.TCPLogstashHandler",
@@ -67,6 +68,8 @@ LOGGING_CONFIG: dict = {
             "fqdn": False,  # Fully qualified domain name. Default value: false.
             "tags": [LOGGER_SETTINGS.app_tag],  # list of tags. Default: None.
         },
+        {%- endif %}
+
     },
     "loggers": {
         "app": {
@@ -79,6 +82,7 @@ LOGGING_CONFIG: dict = {
             "level": LOGGER_SETTINGS.app_log_level,
             "propagate": False,
         },
+        {% if cookiecutter.send_logs_to_elk=='y' -%}
         "app.elk": {
             "handlers": [
                 "console",
@@ -87,6 +91,7 @@ LOGGING_CONFIG: dict = {
             "level": LOGGER_SETTINGS.app_log_level,
             "propagate": False,
         },
+        {%- endif %}
         "app.database.mysql": {
             "handlers": [
                 "console",
@@ -99,14 +104,6 @@ LOGGING_CONFIG: dict = {
                 "console",
             ],
             "level": LOGGER_SETTINGS.uvicorn_log_level,
-            "propagate": False,
-        },
-        "celery": {
-            "handlers": [
-                "console",
-                "logstash",
-            ],
-            "level": LOGGER_SETTINGS.app_log_level,
             "propagate": False,
         },
     },

@@ -1,13 +1,13 @@
 import logging
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
 from app.database.db import Base, engine
 from app.middleware.router_logging import RouterLoggingMiddleware
 from app.middleware.sql import SQLAlchemyMiddleware
+from app.routers.root_router import routers
 from app.settings.config import AppSettings
 from app.settings.logging import LOGGING_CONFIG
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 logging.config.dictConfig(LOGGING_CONFIG)  # type: ignore
 
@@ -34,21 +34,5 @@ app.add_middleware(RouterLoggingMiddleware)
 
 Base.metadata.create_all(engine)
 
-
-@app.get("/ping")
-async def pong():
-    """Sanity check.
-
-    This will let the user know that the service is operational.
-    And this path operation will:
-    * show a lifesign
-    """
-    return {"ping": "pong!"}
-
-
-"""
-docker
-docker-compose
-
-
-"""
+for router in routers:
+    app.include_router(router, prefix=app_settings.base_url)

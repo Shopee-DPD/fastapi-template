@@ -1,0 +1,13 @@
+version: '3'
+services:
+  {{ cookiecutter.project_name }}-backend:
+    image: ${DOCKER_IMAGE:{{ cookiecutter.project_name }}-api:latest}
+    container_name: ${CONTAINER_NAME:{{ cookiecutter.project_name }}-api}
+    build: .
+    ports:
+      - "${PORT:-5517}:80"
+    volumes:
+      - ./app/logs:/code/app/logs
+    environment:
+      - TZ=Asia/Taipei
+    restart: unless-stopped

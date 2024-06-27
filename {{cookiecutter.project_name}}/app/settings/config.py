@@ -19,10 +19,12 @@ class AppSettings(BaseConfig):
 class LoggerSettings(BaseConfig):
     app_log_level: str = Field(alias="LOG_LEVEL_APP", default="DEBUG")
     uvicorn_log_level: str = Field(alias="LOG_LEVEL_UVICORN", default="INFO")
+    {% if cookiecutter.send_logs_to_elk=='y' -%}
     logstash_log_level: str = Field(alias="LOG_LEVEL_LOGSTASH", default="DEBUG")
     logstash_host: str = Field(alias="LOGSTASH_HOST", default="localhost")
     logstash_port: str = Field(alias="LOGSTASH_PORT", default="50000")
     app_tag: str = Field(alias="APP_TAG", default="dev")
+    {%- endif %}
 
 
 class DatabaseSettings(BaseConfig):

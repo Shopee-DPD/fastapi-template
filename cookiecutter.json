@@ -1,0 +1,7 @@
+{
+  "project_name": "project_name",
+  "project_description": "",
+  "python_version": "3.8.16",
+  "build_docker_image": "n",
+  "send_logs_to_elk": "y"
+}
