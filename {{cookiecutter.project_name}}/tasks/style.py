@@ -31,7 +31,7 @@ def flake8(ctx) -> None:
 
 @task
 def black(ctx) -> None:
-    """Reformat python files throguh black"""
+    """Reformat python files through black"""
     _ctx_run(
         ctx,
         cmd="black",
@@ -41,7 +41,7 @@ def black(ctx) -> None:
 
 @task
 def isort(ctx) -> None:
-    """Reformat python files throguh isort"""
+    """Reformat python files through isort"""
     _ctx_run(
         ctx,
         cmd="isort",
@@ -71,13 +71,13 @@ def isort_check(ctx) -> None:
 
 @task
 def run(ctx, reformat: bool = False) -> None:
-    """Check/Reformat style throguh black, isort and flake8
+    """Check/Reformat style through black, isort and flake8
 
     Examples:
         # Check style through black, isort, flake8
         $ inv style.run
 
-        # Reformat python files throguh black and isort
+        # Reformat python files through black and isort
         $ inv style.run --reformat
         $ inv style.run -r
 
